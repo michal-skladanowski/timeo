@@ -1,0 +1,19 @@
+.wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    opacity: 1;
+    animation-duration: 1000ms;
+    animation-name: appears;
+    padding: 5px 50px;
+    text-align: start;
+    
+    @keyframes appears {
+        from {
+          opacity: 0%;
+        }
+    
+        to {
+          opacity: 100%;
+        }
+    }
+}

@@ -26,6 +26,10 @@
   &:focus {
     outline: none;
   }
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px -5px grey;
+  }
 
   svg {
     animation-duration: 1000ms;
@@ -56,5 +60,4 @@
   @extend .button;
   background-color: rgb(226, 5, 5);
   animation-duration: 1000ms;
-  animation-name: appears;
 }

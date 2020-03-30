@@ -1,0 +1,30 @@
+.wrapper {
+  background-color: rgb(5, 30, 52);
+  height: 100vh;
+  padding: 30px 10px;
+
+  img {
+    width: 150px;
+    height: auto;
+  }
+}
+
+.nav {
+  padding: 0;
+
+  &Item {
+    margin: 10px 0;
+    text-align: center;
+    list-style: none;
+
+    &Link {
+      text-decoration: none;
+      color: white;
+      font-size: 1.1em;
+
+      &Active {
+        font-weight: 700;
+      }
+    }
+  }
+}

@@ -33,10 +33,16 @@ const AddRecordForm = props => {
   const stop = e => {
     clearInterval(timerInterval);
     console.log(currentTimestamp);
-    props.addRecord({
-        time: currentTimestamp,
-        description: e.target[0].value
-    },e.target);
+    const now = new Date().getTime();
+    currentTimestamp > 0 ? (
+        props.addRecord({
+            time: currentTimestamp,
+            description: e.target[0].value,
+            createdAt: now
+        },e.target)
+    ) : (
+        alert('No record')
+    );
     setTimestampWhenPaused( 0 );
     setCurrentTimestamp(0);
     setTimerPaused(true);

@@ -2,28 +2,34 @@ import React from "react";
 import RecordList from "../../Components/RecordList/RecordList";
 import AddRecordForm from "../../Components/AddRecordForm/AddRecordForm";
 import LoggedUserTemplate from "../../Templates/LoggedUserTemplate";
+import StyledLoadingSpinner from "../../Components/Loader/Loader";
 import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
 
 class DashboardView extends React.Component {
   state = {
     recordsArray: []
   };
-  // addRecord = (newItem, input) => {
-  //   input.reset();
-  //   this.setState(prevState => ({
-  //     recordsArray: [newItem, ...prevState.recordsArray]
-  //   }));
-  // };
+
   render() {
-    console.log(this.props);
     const addRecordForm = <AddRecordForm />;
-    const recordList = <RecordList recordsArray={this.props.records} />;
+    const recordList =
+      this.props.records.length > 0 ? (
+        <RecordList recordsArray={this.props.records} />
+      ) : (
+        <StyledLoadingSpinner />
+      );
     return <LoggedUserTemplate header={addRecordForm} body={recordList} />;
   }
 }
 const mapStateToProps = state => {
   return {
-    records: state.record.records
+    records: state.firestore.ordered.records || state.record.records,
+    auth: state.firebase.auth
   };
 };
-export default connect(mapStateToProps)(DashboardView);
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([{ collection: "records", limit: 30 }])
+)(DashboardView);

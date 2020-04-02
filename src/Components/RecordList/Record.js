@@ -6,7 +6,7 @@ const Record = ({ data }) => {
 
   return (
     <li className={styles.wrapper}>
-      <div>{moment(createdAt).calendar()}</div>
+      <div>{moment(createdAt.toDate()).calendar()}</div>
       <div>{description}</div>
       <div>{moment.utc(time).format("HH:mm:ss")}</div>
     </li>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import firebase from "firebase/app";
 import { connect } from "react-redux";
 import styles from "./AddRecordForm.module.scss";
 import CurrentTime from "../Timer/CurrentTime";
@@ -36,11 +37,11 @@ const AddRecordForm = props => {
   const stop = e => {
     clearInterval(timerInterval);
     console.log(currentTimestamp);
-    const now = new Date().getTime();
+    const now = new Date();
     const record = {
       time: currentTimestamp,
       description: e.target[0].value,
-      createdAt: now,
+      createdAt: firebase.firestore.Timestamp.fromDate(now),
       id: Math.random() * Math.random() * 1000
     };
     if (currentTimestamp > 0) {

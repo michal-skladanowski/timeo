@@ -2,14 +2,18 @@ import React from "react";
 import Header from "../Components/Header/Header";
 import MenuSidebar from "../Components/MenuSidebar/MenuSidebar";
 import styled from "styled-components";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 const StyledWraper = styled.div`
 display: grid;
     grid-template-columns: 1fr 5fr;
 }
 `;
-const LoggedUserTemplate = ({ header, body }) => {
-  return (
+const LoggedUserTemplate = ({ header, body, auth }) => {
+  return !auth.uid ? (
+    <Redirect to="/login" />
+  ) : (
     <StyledWraper>
       <MenuSidebar />
       <div>
@@ -19,4 +23,10 @@ const LoggedUserTemplate = ({ header, body }) => {
     </StyledWraper>
   );
 };
-export default LoggedUserTemplate;
+
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth
+  };
+};
+export default connect(mapStateToProps)(LoggedUserTemplate);

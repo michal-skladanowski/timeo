@@ -10,15 +10,15 @@ const StyledWrapper = styled.div`
   margin: auto;
   display: flex;
   width: 400px;
-  height: 300px;
+  height: 333px;
   position: absolute;
-  top: 50%;
-  margin-top: -150px;
+  top: 20%;
   margin-left: -200px;
   left: 50%;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  color: #051e34;
 `;
 const StyledForm = styled(Form)`
   width: 400px;
@@ -26,6 +26,7 @@ const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
   background-color: white;
+  text-align: left;
   border-radius: 15px;
   box-shadow: -5px 0 15px rgba(255, 255, 255, 0.1);
 `;
@@ -53,6 +54,10 @@ const StyledLogo = styled.img`
   display: block;
   margin-bottom: 20px;
 `;
+
+const StyledHeading = styled.h1`
+  margin-bottom: 20px;
+`;
 const LoginView = ({ children, signIn }) => {
   return (
     <UnloggedUserTemplate>
@@ -78,8 +83,11 @@ const LoginView = ({ children, signIn }) => {
         >
           {({ isSubmitting }) => (
             <StyledForm>
+              <StyledHeading>Sign in</StyledHeading>
+              <label htmlFor="email">Email Address</label>
               <Field as={StyledInput} type="email" name="email" />
               {/* <ErrorMessage name="email" component="div" /> */}
+              <label htmlFor="password">Password</label>
               <Field as={StyledInput} type="password" name="password" />
               {/* <ErrorMessage name="password" component="div" />*/}
               <StyledButton type="submit" disabled={isSubmitting}>
@@ -88,6 +96,7 @@ const LoginView = ({ children, signIn }) => {
             </StyledForm>
           )}
         </Formik>
+        Copoy
       </StyledWrapper>
     </UnloggedUserTemplate>
   );

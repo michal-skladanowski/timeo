@@ -32,3 +32,19 @@ export const signOut = () => {
       });
   };
 };
+
+export const signUp = newUser => {
+  return (dispatch, getState, getFirebase) => {
+    const firebase = getFirebase();
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(newUser.email, newUser.password)
+      .then(() => {
+        dispatch({ type: "SIGNUP_SUCCESS" });
+      })
+      .catch(err => {
+        dispatch({ type: "SIGNUP_ERROR", err });
+      });
+  };
+};

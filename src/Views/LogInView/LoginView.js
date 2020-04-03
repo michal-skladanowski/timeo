@@ -1,10 +1,11 @@
 import React from "react";
 import UnloggedUserTemplate from "../../Templates/UnloggedUserTemplate";
 import { Formik, Form, Field } from "formik";
-import { signIn } from "../../store/actions/authAction";
+import { signIn, signUp } from "../../store/actions/authAction";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import logo from "../../assets/logo.png";
+import { Link } from "react-router-dom";
 
 const StyledWrapper = styled.div`
   margin: auto;
@@ -48,7 +49,8 @@ const StyledButton = styled.button`
   padding: 10px 20px;
   width: 120px;
   border-radius: 10px;
-  margin: 0 auto;
+
+  margin-bottom: 15px;
 `;
 const StyledLogo = styled.img`
   display: block;
@@ -58,7 +60,9 @@ const StyledLogo = styled.img`
 const StyledHeading = styled.h1`
   margin-bottom: 20px;
 `;
-const LoginView = ({ children, signIn }) => {
+const LoginView = ({ children, signIn, signUp, match }) => {
+  const { path } = match;
+  console.log(path);
   return (
     <UnloggedUserTemplate>
       <StyledWrapper>
@@ -77,13 +81,16 @@ const LoginView = ({ children, signIn }) => {
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            signIn(values);
+            path === "/login" ? signIn(values) : signUp(values);
+
             setSubmitting(false);
           }}
         >
           {({ isSubmitting }) => (
             <StyledForm>
-              <StyledHeading>Sign in</StyledHeading>
+              <StyledHeading>
+                {path === "/login" ? "Sign in" : "Sign up"}
+              </StyledHeading>
               <label htmlFor="email">Email Address</label>
               <Field as={StyledInput} type="email" name="email" />
               {/* <ErrorMessage name="email" component="div" /> */}
@@ -91,12 +98,16 @@ const LoginView = ({ children, signIn }) => {
               <Field as={StyledInput} type="password" name="password" />
               {/* <ErrorMessage name="password" component="div" />*/}
               <StyledButton type="submit" disabled={isSubmitting}>
-                Log In
+                {path === "/login" ? "Sign in" : "Sign up"}
               </StyledButton>
+              {path === "/login" ? (
+                <Link to="/signup">Don't have an account? Sign up here</Link>
+              ) : (
+                <Link to="/login">Already have an account? Sign in here.</Link>
+              )}
             </StyledForm>
           )}
         </Formik>
-        Copoy
       </StyledWrapper>
     </UnloggedUserTemplate>
   );
@@ -104,7 +115,8 @@ const LoginView = ({ children, signIn }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signIn: creds => dispatch(signIn(creds))
+    signIn: creds => dispatch(signIn(creds)),
+    signUp: creds => dispatch(signUp(creds))
   };
 };
 export default connect(null, mapDispatchToProps)(LoginView);

@@ -5,6 +5,7 @@ import styles from "./AddRecordForm.module.scss";
 import CurrentTime from "../Timer/CurrentTime";
 import { FaPlay, FaPause, FaStop } from "react-icons/fa";
 import { addRecord } from "../../store/actions/recordsAction";
+import Input from "../../Components/atoms/Input";
 
 const AddRecordForm = props => {
   const [currentTimestamp, setCurrentTimestamp] = useState(0);
@@ -59,11 +60,7 @@ const AddRecordForm = props => {
 
   return (
     <form onSubmit={stop}>
-      <input
-        type="text"
-        className={styles.input}
-        placeholder="What are you working on?"
-      />
+      <Input type="text" placeholder="What are you working on?" />
       <CurrentTime timestamp={currentTimestamp} />
       <button
         type="button"

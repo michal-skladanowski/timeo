@@ -6,10 +6,9 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 const StyledWraper = styled.div`
-display: grid;
-    grid-template-columns: 1fr 5fr;
-}
+  padding-left: 200px;
 `;
+
 const LoggedUserTemplate = ({ header, body, auth }) => {
   return !auth.uid ? (
     <Redirect to="/login" />

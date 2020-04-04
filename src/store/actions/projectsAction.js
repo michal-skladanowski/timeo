@@ -1,17 +1,17 @@
-export const addRecord = record => {
+export const addProject = project => {
   return (dispatch, getState, getFirebase) => {
     const firestore = getFirebase().firestore();
     const user = getState().firebase.auth.uid;
-    const newRecord = {
-      ...record,
+    const newProject = {
+      ...project,
       user
     };
     firestore
-      .collection("records")
-      .add(newRecord)
+      .collection("projects")
+      .add(newProject)
       .then(() => {
-        console.log(newRecord);
-        dispatch({ type: "ADD_RECORD", newRecord });
+        console.log(newProject);
+        dispatch({ type: "ADD_PROJECT", newProject });
       })
       .catch(err => {
         console.log(err);

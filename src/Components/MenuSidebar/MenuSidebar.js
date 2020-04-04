@@ -4,6 +4,16 @@ import styles from "./menuSidebar.module.scss";
 import logo from "../../assets/logo.png";
 import { signOut } from "../../store/actions/authAction";
 import { connect } from "react-redux";
+import styled from "styled-components";
+
+const StyledButton = styled.button`
+  font-size: 1.25rem;
+  margin-top: auto;
+  margin-bottom: 50px;
+  color: white;
+  background: none;
+  border: none;
+`;
 
 const MenuSidebar = ({ logout }) => {
   return (
@@ -32,7 +42,7 @@ const MenuSidebar = ({ logout }) => {
           </li>
         </ul>
       </nav>
-      <button onClick={logout}>Logout</button>
+      <StyledButton onClick={logout}>Logout</StyledButton>
     </div>
   );
 };

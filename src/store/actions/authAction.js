@@ -36,10 +36,20 @@ export const signOut = () => {
 export const signUp = newUser => {
   return (dispatch, getState, getFirebase) => {
     const firebase = getFirebase();
+    const firestore = firebase.firestore();
 
     firebase
       .auth()
       .createUserWithEmailAndPassword(newUser.email, newUser.password)
+      .then(resp => {
+        console.log(resp);
+        firestore
+          .collection("users")
+          .doc(resp.user.uid)
+          .set({
+            nickname: "nickname"
+          });
+      })
       .then(() => {
         dispatch({ type: "SIGNUP_SUCCESS" });
       })

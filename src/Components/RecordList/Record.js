@@ -6,9 +6,9 @@ const Record = ({ data }) => {
 
   return (
     <li className={styles.wrapper}>
-      <div>{moment(createdAt.toDate()).calendar()}</div>
+      <div>{createdAt && moment(createdAt.toDate()).fromNow()}</div>
       <div>{description}</div>
-      <div>{moment.utc(time).format("HH:mm:ss")}</div>
+      <div>{time && moment.utc(time).format("HH:mm:ss")}</div>
     </li>
   );
 };

@@ -18,3 +18,22 @@ export const addProject = project => {
       });
   };
 };
+
+export const getProjects = () => {
+  return (dispatch, getState, getFirebase) => {
+    const firestore = getFirebase().firestore();
+    const user = getState().firebase.auth.uid;
+    firestore
+      .collection("projects")
+      .where("user", "==", user)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          console.log(doc.id, " => ", doc.data());
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};

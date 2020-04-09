@@ -6,6 +6,7 @@ import CurrentTime from "../Timer/CurrentTime";
 import { FaPlay, FaPause, FaStop } from "react-icons/fa";
 import { addRecord } from "../../store/actions/recordsAction";
 import Input from "../../Components/atoms/Input";
+import SelectProject from "./SelectProject";
 
 const AddRecordForm = props => {
   const [currentTimestamp, setCurrentTimestamp] = useState(0);
@@ -37,11 +38,13 @@ const AddRecordForm = props => {
   //stop the timer
   const stop = e => {
     clearInterval(timerInterval);
-    console.log(currentTimestamp);
+    const project = e.target.project.value;
+    console.log("id projectu", project);
     const now = new Date();
     const record = {
       time: currentTimestamp,
       description: e.target[0].value,
+      project,
       createdAt: firebase.firestore.Timestamp.fromDate(now),
       id: Math.random() * Math.random() * 1000
     };
@@ -61,6 +64,7 @@ const AddRecordForm = props => {
   return (
     <form onSubmit={stop}>
       <Input type="text" placeholder="What are you working on?" />
+      <SelectProject />
       <CurrentTime timestamp={currentTimestamp} />
       <button
         type="button"

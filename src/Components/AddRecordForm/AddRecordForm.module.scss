@@ -23,7 +23,8 @@
   height: 40px;
   color: white;
 
-  &:focus {
+  &:focus,
+  &:active {
     outline: none;
   }
   &:hover {

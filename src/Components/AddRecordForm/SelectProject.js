@@ -11,13 +11,17 @@ const StyledCreatableSelect = styled(CreatableSelect)`
   margin-left: 20px;
 `;
 
-const SelectProject = ({ projects }) => {
+const SelectProject = ({ projects, getProjectTitle }) => {
   let projectsOptions;
 
   if (projects) {
     projectsOptions = projects;
   }
-
+  const changeHandler = optionSelected => {
+    const title = optionSelected.title;
+    getProjectTitle(title);
+    console.log("SelectProject component", title);
+  };
   return (
     <>
       <StyledCreatableSelect
@@ -25,6 +29,7 @@ const SelectProject = ({ projects }) => {
         getOptionLabel={opt => opt.title}
         getOptionValue={opt => opt.id}
         options={projectsOptions}
+        onChange={changeHandler}
         name="project"
         placeholder="Select project"
       />

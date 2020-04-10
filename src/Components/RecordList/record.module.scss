@@ -1,19 +1,24 @@
-.wrapper{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    opacity: 1;
-    animation-duration: 1000ms;
-    animation-name: appears;
-    padding: 5px 50px;
-    text-align: start;
-    
-    @keyframes appears {
-        from {
-          opacity: 0%;
-        }
-    
-        to {
-          opacity: 100%;
-        }
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 0.1fr;
+  opacity: 1;
+  animation-duration: 1000ms;
+  animation-name: appears;
+  font-size: 0.9rem;
+  padding: 8px 75px;
+  text-align: start;
+  border-top: 1px solid lightgray;
+
+  @keyframes appears {
+    from {
+      opacity: 0%;
     }
+
+    to {
+      opacity: 100%;
+    }
+  }
+}
+.time_item {
+  justify-self: end;
 }

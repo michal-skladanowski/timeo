@@ -13,7 +13,11 @@ const AddRecordForm = props => {
   const [timerPaused, setTimerPaused] = useState(true);
   const [timerInterval, setTimerInterval] = useState("");
   const [timestampWhenPaused, setTimestampWhenPaused] = useState(0);
+  const [projectTitle, setProjectTitle] = useState("No project");
 
+  const getProjectTitle = title => {
+    setProjectTitle(title);
+  };
   //start the timer
   const start = () => {
     const timeStart = new Date(); //time when timer starts
@@ -37,16 +41,19 @@ const AddRecordForm = props => {
 
   //stop the timer
   const stop = e => {
+    e.preventDefault();
     clearInterval(timerInterval);
-    const project = e.target.project.value;
+    const project = {
+      id: e.target.project.value,
+      title: projectTitle
+    };
     console.log("id projectu", project);
     const now = new Date();
     const record = {
       time: currentTimestamp,
       description: e.target[0].value,
       project,
-      createdAt: firebase.firestore.Timestamp.fromDate(now),
-      id: Math.random() * Math.random() * 1000
+      createdAt: firebase.firestore.Timestamp.fromDate(now)
     };
     if (currentTimestamp > 0) {
       props.addRecord(record);
@@ -58,13 +65,12 @@ const AddRecordForm = props => {
     setTimestampWhenPaused(0);
     setCurrentTimestamp(0);
     setTimerPaused(true);
-    e.preventDefault();
   };
 
   return (
     <form onSubmit={stop}>
       <Input type="text" placeholder="What are you working on?" />
-      <SelectProject />
+      <SelectProject getProjectTitle={getProjectTitle} />
       <CurrentTime timestamp={currentTimestamp} />
       <button
         type="button"

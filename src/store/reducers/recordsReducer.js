@@ -8,6 +8,10 @@ const recordsReducer = (state = initState, action) => {
         ...state,
         records: [action.record, ...state.records]
       };
+    case "DELETE_RECORD":
+      return {
+        ...state
+      };
     default:
       return state;
   }

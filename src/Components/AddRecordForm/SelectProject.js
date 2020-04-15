@@ -18,7 +18,7 @@ const SelectProject = ({ projects, getProjectTitle }) => {
     projectsOptions = projects;
   }
   const changeHandler = optionSelected => {
-    const title = optionSelected.title;
+    const title = optionSelected && optionSelected.title;
     getProjectTitle(title);
     console.log("SelectProject component", title);
   };

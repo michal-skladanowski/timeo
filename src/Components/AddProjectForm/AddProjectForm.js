@@ -23,7 +23,8 @@ const AddProjectForm = ({ addProject, getList }) => {
   const submitHandler = e => {
     e.preventDefault();
     const project = {
-      title: e.target[0].value
+      title: e.target[0].value,
+      duration: 0
     };
     addProject(project);
   };

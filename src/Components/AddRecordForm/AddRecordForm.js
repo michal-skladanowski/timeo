@@ -5,6 +5,7 @@ import styles from "./AddRecordForm.module.scss";
 import CurrentTime from "../Timer/CurrentTime";
 import { FaPlay, FaPause, FaStop } from "react-icons/fa";
 import { addRecord } from "../../store/actions/recordsAction";
+import { updateProjectDuration } from "../../store/actions/projectsAction";
 import Input from "../../Components/atoms/Input";
 import SelectProject from "./SelectProject";
 
@@ -57,6 +58,7 @@ const AddRecordForm = props => {
     };
     if (currentTimestamp > 0) {
       props.addRecord(record);
+      props.updateProjectDuration(project.id, record.time);
       e.target.reset();
     } else {
       alert("No record");
@@ -92,7 +94,9 @@ const AddRecordForm = props => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addRecord: record => dispatch(addRecord(record))
+    addRecord: record => dispatch(addRecord(record)),
+    updateProjectDuration: (id, duration) =>
+      dispatch(updateProjectDuration(id, duration))
   };
 };
 export default connect(null, mapDispatchToProps)(AddRecordForm);

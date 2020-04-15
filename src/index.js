@@ -20,7 +20,7 @@ import firebaseConfig from "./config/firebaseConfig";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 firebase.initializeApp(firebaseConfig);
-firebase.firestore();
+export const firestoreinstance = firebase.firestore();
 
 const rrfConfig = {
   userProfile: "users",

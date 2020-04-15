@@ -1,6 +1,6 @@
 .wrapper {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr 1fr 0.1fr;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 0.3fr;
   opacity: 1;
   animation-duration: 1000ms;
   animation-name: appears;
@@ -21,4 +21,7 @@
 }
 .time_item {
   justify-self: end;
+}
+.delete_item {
+  justify-self: center;
 }

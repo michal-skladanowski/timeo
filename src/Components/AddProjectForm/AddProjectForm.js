@@ -2,6 +2,22 @@ import React from "react";
 import { connect } from "react-redux";
 import { addProject, getProjects } from "../../store/actions/projectsAction";
 import Input from "../../Components/atoms/Input";
+import styled from "styled-components";
+
+const StyledButton = styled.button`
+  height: 38px;
+  width: 120px;
+  display: inline-block;
+  border: none;
+  border-radius: 0.25em;
+  margin-left: 20px;
+  text-align: center;
+  font-size: 1em;
+  vertical-align: middle;
+  cursor: pointer;
+  color: white;
+  background-color: #051e34;
+`;
 
 const AddProjectForm = ({ addProject, getList }) => {
   const submitHandler = e => {
@@ -14,7 +30,7 @@ const AddProjectForm = ({ addProject, getList }) => {
   return (
     <form onSubmit={submitHandler}>
       <Input type="text" />
-      <button type="submit">Add project</button>
+      <StyledButton type="submit">Add project</StyledButton>
       {getList()}
     </form>
   );

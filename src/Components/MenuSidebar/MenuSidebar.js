@@ -33,6 +33,7 @@ const MenuSidebar = ({ logout }) => {
           </li>
           <li className={styles.navItem}>
             <NavLink
+              exact
               activeClassName={styles.navItemLinkActive}
               className={styles.navItemLink}
               to="/projects"

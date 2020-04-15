@@ -15,20 +15,27 @@ import {
   ReactReduxFirebaseProvider,
   isLoaded
 } from "react-redux-firebase";
-import { createFirestoreInstance } from "redux-firestore";
+import { createFirestoreInstance, actionTypes } from "redux-firestore";
 import firebaseConfig from "./config/firebaseConfig";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 firebase.initializeApp(firebaseConfig);
 firebase.firestore();
 
 const rrfConfig = {
   userProfile: "users",
-  useFirestoreForProfile: true
+  useFirestoreForProfile: true,
+  onAuthStateChanged: (authData, firebase, dispatch) => {
+    // Clear redux-firestore state if auth does not exist (i.e logout)
+    if (!authData) {
+      dispatch({ type: actionTypes.CLEAR_DATA });
+    }
+  }
 };
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunk.withExtraArgument(getFirebase))
+  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(getFirebase)))
 );
 
 const rrfProps = {

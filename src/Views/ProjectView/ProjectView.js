@@ -41,7 +41,7 @@ export default compose(
         collection: "records",
         where: [
           ["user", "==", props.auth.uid],
-          ["project", "==", props.match.params.id]
+          ["project.id", "==", props.match.params.id]
         ]
       },
       {

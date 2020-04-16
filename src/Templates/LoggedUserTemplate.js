@@ -7,6 +7,14 @@ import { connect } from "react-redux";
 
 const StyledWraper = styled.div`
   padding-left: 200px;
+  height: 100vh;
+`;
+const StyledDiv = styled.div`
+  background-color: #f8f9fb;
+  padding-top: 30px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  height: calc(100% - 30px);
 `;
 
 const LoggedUserTemplate = ({ header, body, auth }) => {
@@ -15,10 +23,10 @@ const LoggedUserTemplate = ({ header, body, auth }) => {
   ) : (
     <StyledWraper>
       <MenuSidebar />
-      <div>
+      <StyledDiv>
         <Header>{header}</Header>
         {body}
-      </div>
+      </StyledDiv>
     </StyledWraper>
   );
 };

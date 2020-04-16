@@ -5,7 +5,8 @@ body {
   font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f8f9fb;
+
+  background-color: rgb(5, 30, 52);
 }
 input,
 select,
@@ -24,4 +25,9 @@ a {
 h1 {
   margin: 0;
   font-weight: 400;
+}
+
+* {
+  margin: 0;
+  padding: 0;
 }

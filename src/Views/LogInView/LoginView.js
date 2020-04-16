@@ -62,7 +62,6 @@ const StyledHeading = styled.h1`
 `;
 const LoginView = ({ children, signIn, signUp, match }) => {
   const { path } = match;
-  console.log(path);
   return (
     <UnloggedUserTemplate>
       <StyledWrapper>

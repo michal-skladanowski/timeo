@@ -1,9 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import styles from "./record.module.scss";
 import { connect } from "react-redux";
 import { deleteRecord } from "../../store/actions/recordsAction";
+import { FaTrashAlt } from "react-icons/fa";
+import ListElement from "../../Components/atoms/ListElements";
+import IconButton from "../../Components/atoms/IconButton";
+import styled from "styled-components";
+
+const StyledDiv = styled.div`
+  justify-self: center;
+`;
+
 const Record = ({ data, deleteItem }) => {
   const {
     id,
@@ -14,19 +22,19 @@ const Record = ({ data, deleteItem }) => {
   } = data;
   const projectUrl = "/projects/" + project.id;
   return (
-    <li className={styles.wrapper}>
+    <ListElement>
       <div>{createdAt && moment(createdAt.toDate()).fromNow()}</div>
       <div>{description}</div>
       <div>
         <Link to={projectUrl}> {project.title}</Link>
       </div>
-      <div className={styles.time_item}>
-        {time && moment.utc(time).format("HH:mm:ss")}
-      </div>
-      <div className={styles.delete_item}>
-        <button onClick={() => deleteItem(id)}>x</button>
-      </div>
-    </li>
+      <StyledDiv>{time && moment.utc(time).format("HH:mm:ss")}</StyledDiv>
+      <StyledDiv>
+        <IconButton onClick={() => deleteItem(id)}>
+          <FaTrashAlt />
+        </IconButton>
+      </StyledDiv>
+    </ListElement>
   );
 };
 

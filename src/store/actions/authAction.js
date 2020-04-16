@@ -22,12 +22,10 @@ export const signIn = credentials => {
 export const signOut = () => {
   return (dispatch, getState, getFirebase) => {
     const firebase = getFirebase();
-    console.log("sign out action before then");
     firebase
       .auth()
       .signOut()
       .then(() => {
-        console.log("sign out action then");
         dispatch({ type: "SIGNOUT_SUCCESS" });
       });
   };

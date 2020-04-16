@@ -26,7 +26,7 @@ const AddRecordForm = props => {
       setInterval(() => {
         const timeNow = new Date();
         const currentTimestamp =
-          timestampWhenPaused + timeNow.getTime() - timeStart.getTime(); //calculate current value of the timer            console.log(this.state.currentTime);
+          timestampWhenPaused + timeNow.getTime() - timeStart.getTime(); //calculate current value of the timer
         setCurrentTimestamp(currentTimestamp);
       }, 1000)
     );
@@ -48,7 +48,6 @@ const AddRecordForm = props => {
       id: e.target.project.value,
       title: projectTitle
     };
-    console.log("id projectu", project);
     const now = new Date();
     const record = {
       time: currentTimestamp,

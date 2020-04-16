@@ -7,7 +7,6 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
 const ProjectView = ({ project, records, match }) => {
-  console.log(match.params.id);
   const { title } = project ? project : "";
   const recordList = records ? (
     records.length > 0 ? (
@@ -22,7 +21,6 @@ const ProjectView = ({ project, records, match }) => {
 };
 
 const mapStateToProps = state => {
-  console.log(state);
   const projects = state.firestore.ordered.projects;
   const project = projects ? projects[0] : null;
   return {

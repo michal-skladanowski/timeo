@@ -10,7 +10,6 @@ export const addProject = project => {
       .collection("projects")
       .add(newProject)
       .then(() => {
-        console.log(newProject);
         dispatch({ type: "ADD_PROJECT", newProject });
       })
       .catch(err => {
@@ -27,11 +26,7 @@ export const getProjects = () => {
       .collection("projects")
       .where("user", "==", user)
       .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          console.log(doc.id, " => ", doc.data());
-        });
-      })
+      .then()
       .catch(err => {
         console.log(err);
       });
@@ -63,14 +58,13 @@ export const deleteProject = id => {
       .where("project.id", "==", id)
       .get()
       .then(querySnapshot => {
-        console.log("odpalam sie w querysnapshot", querySnapshot);
         querySnapshot.forEach(doc => {
           doc.ref.delete();
           console.log(doc.ref, doc);
         });
       })
       .catch(err => {
-        console.log("wypierdalam sie na usuwaniu recordow", err);
+        console.log(err);
       });
 
     firestore

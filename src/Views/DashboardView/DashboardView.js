@@ -23,7 +23,6 @@ class DashboardView extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  console.log(state);
   return {
     records: state.firestore.ordered.records,
     auth: state.firebase.auth

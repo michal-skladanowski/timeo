@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "firebase/app";
 import { connect } from "react-redux";
 import { addProject, getProjects } from "../../store/actions/projectsAction";
 import Input from "../../Components/atoms/Input";
@@ -22,11 +23,14 @@ const StyledButton = styled.button`
 const AddProjectForm = ({ addProject, getList }) => {
   const submitHandler = e => {
     e.preventDefault();
+    const now = new Date();
     const project = {
       title: e.target[0].value,
+      createdAt: firebase.firestore.Timestamp.fromDate(now),
       duration: 0
     };
     addProject(project);
+    e.target.reset();
   };
   return (
     <form onSubmit={submitHandler}>

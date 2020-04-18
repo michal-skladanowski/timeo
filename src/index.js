@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import firebase from "firebase/app";
+import Loader from "react-loader-spinner";
 import "firebase/auth";
 import "firebase/firestore";
 import "./index.css";
@@ -18,6 +19,7 @@ import {
 import { createFirestoreInstance, actionTypes } from "redux-firestore";
 import firebaseConfig from "./config/firebaseConfig";
 import { composeWithDevTools } from "redux-devtools-extension";
+import MainLoader from "./Components/atoms/Loader";
 
 firebase.initializeApp(firebaseConfig);
 export const firestoreinstance = firebase.firestore();
@@ -48,7 +50,7 @@ const rrfProps = {
 
 const AuthIsLoaded = ({ children }) => {
   const auth = useSelector(state => state.firebase.auth);
-  if (!isLoaded(auth)) return <div>Loading Screen...</div>;
+  if (!isLoaded(auth)) return <MainLoader />;
   return children;
 };
 

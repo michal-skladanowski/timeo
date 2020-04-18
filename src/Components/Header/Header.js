@@ -7,7 +7,7 @@ const StyledHeader = styled.header`
   align-items: center;
   justify-content: center;
   height: 70px;
-  box-shadow: 0 0px 15px -5px #f8f9fb;
+  box-shadow: 0 0px 12px 5px rgba(60, 64, 67, 0.05);
   background-color: white;
   border-radius: 10px;
 `;

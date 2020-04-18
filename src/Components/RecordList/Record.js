@@ -11,6 +11,10 @@ import styled from "styled-components";
 const StyledDiv = styled.div`
   justify-self: center;
 `;
+const CreatedAt = styled.div`
+  font-size: 0.8rem;
+  color: #636364;
+`;
 
 const Record = ({ data, deleteItem }) => {
   const {
@@ -23,12 +27,12 @@ const Record = ({ data, deleteItem }) => {
   const projectUrl = "/projects/" + project.id;
   return (
     <ListElement>
-      <div>{createdAt && moment(createdAt.toDate()).fromNow()}</div>
+      <CreatedAt>{createdAt && moment(createdAt.toDate()).fromNow()}</CreatedAt>
       <div>{description}</div>
       <div>
         <Link to={projectUrl}> {project.title}</Link>
       </div>
-      <StyledDiv>{time && moment.utc(time).format("HH:mm:ss")}</StyledDiv>
+      <div>{time && moment.utc(time).format("HH:mm:ss")}</div>
       <StyledDiv>
         <IconButton onClick={() => deleteItem(id)}>
           <FaTrashAlt />

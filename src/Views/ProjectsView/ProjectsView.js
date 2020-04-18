@@ -33,7 +33,11 @@ export default compose(
   firestoreConnect(props => {
     if (!props.auth.uid) return [];
     return [
-      { collection: "projects", where: [["user", "==", props.auth.uid]] }
+      {
+        collection: "projects",
+        where: [["user", "==", props.auth.uid]],
+        orderBy: ["createdAt", "desc"]
+      }
     ];
   })
 )(ProjectsView);

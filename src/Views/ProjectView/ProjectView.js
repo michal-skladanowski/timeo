@@ -40,7 +40,8 @@ export default compose(
         where: [
           ["user", "==", props.auth.uid],
           ["project.id", "==", props.match.params.id]
-        ]
+        ],
+        orderBy: ["createdAt", "desc"]
       },
       {
         collection: "projects",

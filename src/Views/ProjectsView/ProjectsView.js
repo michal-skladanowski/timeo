@@ -1,22 +1,21 @@
 import React from "react";
 import LoggedUserTemplate from "../../Templates/LoggedUserTemplate";
-import ProjectList from "../../Components/ProjectList/ProjectList";
 import AddProjectForm from "../../Components/AddProjectForm/AddProjectForm";
-import StyledLoadingSpinner from "../../Components/Loader/Loader";
+import RecordList from "../../Components/RecordList/RecordList";
+
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
 const ProjectsView = ({ projects }) => {
+  const columnTitles = ["Project", "Duration"];
   const addProjectForm = <AddProjectForm />;
-  const projectsList = projects ? (
-    projects.length > 0 ? (
-      <ProjectList projectsArray={projects} />
-    ) : (
-      "No projectss"
-    )
-  ) : (
-    <StyledLoadingSpinner />
+  const projectsList = (
+    <RecordList
+      recordsArray={projects}
+      type="projects"
+      headers={columnTitles}
+    />
   );
   return <LoggedUserTemplate header={addProjectForm} body={projectsList} />;
 };

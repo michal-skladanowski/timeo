@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import firebase from "firebase/app";
 import { connect } from "react-redux";
-import Timer from "../Timer/Timer";
+import Timer from "./Timer/Timer";
 import { addRecord } from "../../store/actions/recordsAction";
-import { updateProjectDuration } from "../../store/actions/projectsAction";
 import Input from "../../Components/atoms/Input";
 import SelectProject from "./SelectProject";
 
@@ -27,14 +26,13 @@ const AddRecordForm = props => {
     };
     const now = new Date();
     const record = {
-      time: timpestamp,
+      duration: timpestamp,
       description: document.addProjectForm[0].value,
       project,
       createdAt: firebase.firestore.Timestamp.fromDate(now)
     };
     if (timpestamp > 0) {
       props.addRecord(record);
-      props.updateProjectDuration(project.id, record.time);
       document.addProjectForm.reset();
     } else {
       alert("No record");
@@ -52,9 +50,7 @@ const AddRecordForm = props => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addRecord: record => dispatch(addRecord(record)),
-    updateProjectDuration: (id, duration) =>
-      dispatch(updateProjectDuration(id, duration))
+    addRecord: record => dispatch(addRecord(record))
   };
 };
 export default connect(null, mapDispatchToProps)(AddRecordForm);

@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import moment from "moment";
-import styles from "./CurrentTime.module.scss";
 import { FaPlay, FaPause, FaStop } from "react-icons/fa";
 import styled, { keyframes } from "styled-components";
-
+const StyledWrapper = styled.div`
+  display: inline-block;
+  width: 150px;
+  margin: 0 20px;
+  color: grey;
+  font-weight: 400;
+  font-size: 20px;
+  vertical-align: middle;
+  text-align: center;
+`;
 const appears = keyframes`
       from {
         opacity: 0%;
@@ -95,9 +103,9 @@ const Timer = ({ getTimestamp }) => {
 
   return (
     <>
-      <div className={styles.wrapper}>
+      <StyledWrapper>
         {moment.utc(currentTimestamp).format("HH:mm:ss")}
-      </div>
+      </StyledWrapper>
       <StyledButton
         type="button"
         onClick={timerPaused ? start : pause}

@@ -1,22 +1,18 @@
 import React from "react";
 import RecordList from "../../Components/RecordList/RecordList";
 import LoggedUserTemplate from "../../Templates/LoggedUserTemplate";
-import StyledLoadingSpinner from "../../Components/Loader/Loader";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
 const ProjectView = ({ project, records, match }) => {
   const { title } = project ? project : "";
-  const recordList = records ? (
-    records.length > 0 ? (
-      <RecordList recordsArray={records} />
-    ) : (
-      "No records"
-    )
-  ) : (
-    <StyledLoadingSpinner />
+  const columnTitles = ["Date", "Description", "Duration"];
+
+  const recordList = (
+    <RecordList recordsArray={records} type="project" headers={columnTitles} />
   );
+
   return <LoggedUserTemplate header={title} body={recordList} />;
 };
 

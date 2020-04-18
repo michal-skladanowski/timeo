@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import firebase from "firebase/app";
-import Loader from "react-loader-spinner";
 import "firebase/auth";
 import "firebase/firestore";
 import "./index.css";

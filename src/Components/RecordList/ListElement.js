@@ -37,9 +37,6 @@ const StyledWrapper = styled.ul`
   text-align: start;
   margin-bottom: 3px;
   background-color: white;
-  &:last-child {
-    margin-bottom: 0;
-  }
 `;
 
 const ListElement = ({ data, type, deleteRecord, deleteProject, grid }) => {

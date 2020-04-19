@@ -7,14 +7,19 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
 class DashboardView extends React.Component {
-  columnTitles = ["Date", "Description", "Project", "Duration"];
-
+  columnTitles = [
+    ["Date", "createdAt"],
+    ["Description", "description"],
+    ["Project", "project.title"],
+    ["Duration", "duration"]
+  ];
   render() {
     const addRecordForm = <AddRecordForm />;
     const recordList = (
       <RecordList
         recordsArray={this.props.records}
         type="record"
+        view="dashboardView"
         headers={this.columnTitles}
       />
     );
@@ -25,19 +30,10 @@ class DashboardView extends React.Component {
 const mapStateToProps = state => {
   return {
     records: state.firestore.ordered.records,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    query: state.query.dashboardView
   };
 };
-// export default compose(
-//   connect(mapStateToProps),
-//   firestoreConnect([{ collection: "records", limit: 30 }])
-// )(DashboardView);
-
-// var user = firebase.auth().currentUser;
-
-// db.collection("stories")
-//   .where("author", "==", user.uid)
-//   .get();
 
 export default compose(
   connect(mapStateToProps),
@@ -47,7 +43,8 @@ export default compose(
       {
         collection: "records",
         where: [["user", "==", props.auth.uid]],
-        orderBy: ["createdAt", "desc"]
+        limit: props.query.queryPage * 2,
+        orderBy: [props.query.orderBy, props.query.sortType]
       }
     ];
   })

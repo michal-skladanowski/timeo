@@ -8,12 +8,16 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
 const ProjectsView = ({ projects }) => {
-  const columnTitles = ["Project", "Duration"];
+  const columnTitles = [
+    ["Project", "title"],
+    ["Duration", "duration"]
+  ];
   const addProjectForm = <AddProjectForm />;
   const projectsList = (
     <RecordList
       recordsArray={projects}
       type="projects"
+      view="projectsView"
       headers={columnTitles}
     />
   );
@@ -23,7 +27,8 @@ const ProjectsView = ({ projects }) => {
 const mapStateToProps = state => {
   return {
     projects: state.firestore.ordered.projects,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    query: state.query.projectsView
   };
 };
 
@@ -35,7 +40,8 @@ export default compose(
       {
         collection: "projects",
         where: [["user", "==", props.auth.uid]],
-        orderBy: ["createdAt", "desc"]
+        limit: props.query.queryPage * 25,
+        orderBy: [props.query.orderBy, props.query.sortType]
       }
     ];
   })

@@ -15,6 +15,8 @@ const StyledDiv = styled.div`
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
   height: calc(100% - 30px);
+  display: flex;
+  flex-direction: column;
 `;
 
 const LoggedUserTemplate = ({ header, body, auth }) => {

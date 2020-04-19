@@ -20,8 +20,5 @@ const ListElement = styled.ul`
   text-align: start;
   margin-bottom: 3px;
   background-color: white;
-  &:last-child {
-    margin-bottom: 0;
-  }
 `;
 export default ListElement;

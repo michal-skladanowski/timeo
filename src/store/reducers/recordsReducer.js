@@ -1,5 +1,10 @@
 const initState = {
-  records: []
+  records: [],
+  dataOrder: {
+    dashboardView: { orderBy: "createdAt", sortType: "desc" },
+    projectView: { orderBy: "createdAt", sortType: "desc" }
+  },
+  queryPage: 1
 };
 const recordsReducer = (state = initState, action) => {
   switch (action.type) {

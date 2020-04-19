@@ -7,10 +7,19 @@ import { compose } from "redux";
 
 const ProjectView = ({ project, records, match }) => {
   const { title } = project ? project : "";
-  const columnTitles = ["Date", "Description", "Duration"];
+  const columnTitles = [
+    ["Date", "createdAt"],
+    ["Description", "description"],
+    ["Duration", "duration"]
+  ];
 
   const recordList = (
-    <RecordList recordsArray={records} type="project" headers={columnTitles} />
+    <RecordList
+      recordsArray={records}
+      type="project"
+      view="projectView"
+      headers={columnTitles}
+    />
   );
 
   return <LoggedUserTemplate header={title} body={recordList} />;
@@ -22,7 +31,8 @@ const mapStateToProps = state => {
   return {
     records: state.firestore.ordered.records,
     project,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    query: state.query.projectView
   };
 };
 
@@ -37,7 +47,8 @@ export default compose(
           ["user", "==", props.auth.uid],
           ["project.id", "==", props.match.params.id]
         ],
-        orderBy: ["createdAt", "desc"]
+        limit: props.query.queryPage * 25,
+        orderBy: [props.query.orderBy, props.query.sortType]
       },
       {
         collection: "projects",

@@ -4,25 +4,31 @@ import LoggedUserTemplate from "../../Templates/LoggedUserTemplate";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
+import { ProjectProvider } from "../../contex/projectContext";
 
-const ProjectView = ({ project, records, match }) => {
+const ProjectView = ({ project, records }) => {
   const { title } = project ? project : "";
+  const { itemsCount } = project ? project : "";
   const columnTitles = [
     ["Date", "createdAt"],
     ["Description", "description"],
     ["Duration", "duration"]
   ];
-
   const recordList = (
     <RecordList
       recordsArray={records}
       type="project"
       view="projectView"
       headers={columnTitles}
+      itemsCount={itemsCount}
     />
   );
 
-  return <LoggedUserTemplate header={title} body={recordList} />;
+  return (
+    <ProjectProvider value={project}>
+      <LoggedUserTemplate header={title} body={recordList} />
+    </ProjectProvider>
+  );
 };
 
 const mapStateToProps = state => {
@@ -47,7 +53,7 @@ export default compose(
           ["user", "==", props.auth.uid],
           ["project.id", "==", props.match.params.id]
         ],
-        limit: props.query.queryPage * 25,
+        limit: props.query.queryPage * 2,
         orderBy: [props.query.orderBy, props.query.sortType]
       },
       {

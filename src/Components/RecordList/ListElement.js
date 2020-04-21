@@ -50,7 +50,8 @@ const ListElement = ({ data, type, deleteRecord, deleteProject, grid }) => {
         }
       : type === "projects"
       ? () => {
-          deleteProject(data.id);
+          console.log(data);
+          deleteProject(data.id, data.itemsCount);
         }
       : null;
 
@@ -81,7 +82,7 @@ const ListElement = ({ data, type, deleteRecord, deleteProject, grid }) => {
 const mapDispatchToProps = dispatch => {
   return {
     deleteRecord: id => dispatch(deleteRecord(id)),
-    deleteProject: id => dispatch(deleteProject(id))
+    deleteProject: (id, itemsCount) => dispatch(deleteProject(id, itemsCount))
   };
 };
 export default connect(null, mapDispatchToProps)(ListElement);

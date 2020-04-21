@@ -27,6 +27,7 @@ const AddProjectForm = ({ addProject, getList }) => {
     const project = {
       title: e.target[0].value,
       createdAt: firebase.firestore.Timestamp.fromDate(now),
+      itemsCount: 0,
       duration: 0
     };
     addProject(project);

@@ -45,7 +45,9 @@ export const signUp = newUser => {
           .collection("users")
           .doc(resp.user.uid)
           .set({
-            nickname: "nickname"
+            nickname: "nickname",
+            projectsCount: 0,
+            recordsCount: 0
           });
       })
       .then(() => {

@@ -43,7 +43,7 @@ export default compose(
       {
         collection: "records",
         where: [["user", "==", props.auth.uid]],
-        limit: props.query.queryPage * 2,
+        limit: props.query.queryPage * 20,
         orderBy: [props.query.orderBy, props.query.sortType]
       }
     ];

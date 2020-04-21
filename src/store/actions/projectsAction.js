@@ -1,6 +1,7 @@
 export const addProject = project => {
   return (dispatch, getState, getFirebase) => {
-    const firestore = getFirebase().firestore();
+    const firebase = getFirebase();
+    const firestore = firebase.firestore();
     const user = getState().firebase.auth.uid;
     const newProject = {
       ...project,
@@ -11,6 +12,15 @@ export const addProject = project => {
       .add(newProject)
       .then(() => {
         dispatch({ type: "ADD_PROJECT", newProject });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        projectsCount: firebase.firestore.FieldValue.increment(1)
       })
       .catch(err => {
         console.log(err);
@@ -47,9 +57,10 @@ export const updateProjectDuration = (id, duration) => {
   };
 };
 
-export const deleteProject = id => {
+export const deleteProject = (id, recordsCount) => {
   return (dispatch, getState, getFirebase) => {
-    const firestore = getFirebase().firestore();
+    const firebase = getFirebase();
+    const firestore = firebase.firestore();
     const user = getState().firebase.auth.uid;
 
     firestore
@@ -72,6 +83,17 @@ export const deleteProject = id => {
       .doc(id)
       .delete()
       .then(() => {})
+      .catch(err => {
+        console.log(err);
+      });
+
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        recordsCount: firebase.firestore.FieldValue.increment(-recordsCount),
+        projectsCount: firebase.firestore.FieldValue.increment(-1)
+      })
       .catch(err => {
         console.log(err);
       });

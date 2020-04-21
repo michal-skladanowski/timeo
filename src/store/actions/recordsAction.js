@@ -20,7 +20,17 @@ export const addRecord = record => {
       .collection("projects")
       .doc(record.project.id)
       .update({
+        itemsCount: firebase.firestore.FieldValue.increment(1),
         duration: firebase.firestore.FieldValue.increment(record.duration)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        recordsCount: firebase.firestore.FieldValue.increment(1)
       })
       .catch(err => {
         console.log(err);
@@ -32,6 +42,7 @@ export const deleteRecord = record => {
   return (dispatch, getState, getFirebase) => {
     const firebase = getFirebase();
     const firestore = firebase.firestore();
+    const user = getState().firebase.auth.uid;
     const recordId = record.id;
     firestore
       .collection("records")
@@ -47,7 +58,17 @@ export const deleteRecord = record => {
       .collection("projects")
       .doc(record.project.id)
       .update({
+        itemsCount: firebase.firestore.FieldValue.increment(-1),
         duration: firebase.firestore.FieldValue.increment(-record.duration)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    firestore
+      .collection("users")
+      .doc(user)
+      .update({
+        recordsCount: firebase.firestore.FieldValue.increment(-1)
       })
       .catch(err => {
         console.log(err);

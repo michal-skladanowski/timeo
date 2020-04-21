@@ -4,6 +4,8 @@ import MenuSidebar from "../Components/MenuSidebar/MenuSidebar";
 import styled from "styled-components";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
 
 const StyledWraper = styled.div`
   padding-left: 200px;
@@ -38,4 +40,16 @@ const mapStateToProps = state => {
     auth: state.firebase.auth
   };
 };
-export default connect(mapStateToProps)(LoggedUserTemplate);
+
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect(props => {
+    if (!props.auth.uid) return [];
+    return [
+      {
+        collection: "users",
+        doc: props.auth.uid
+      }
+    ];
+  })
+)(LoggedUserTemplate);

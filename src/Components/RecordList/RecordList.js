@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ListElement from "./ListElement";
 import styled from "styled-components";
 import List from "../../Components/atoms/List";
@@ -6,7 +6,7 @@ import StyledLoadingSpinner from "../../Components/Loader/Loader";
 import { FaSort, FaAngleDoubleRight } from "react-icons/fa";
 import { orderItems, loadMoreItems } from "../../store/actions/queryAction";
 import { connect } from "react-redux";
-import { useFirebase } from "react-redux-firebase";
+import ProjectContext from "../../contex/projectContext";
 
 const StyledWrapper = styled.div`
   margin: 30px 17px;
@@ -80,19 +80,41 @@ const RecordList = ({
   type,
   headers,
   recordsArray,
-  orderData,
   loadMore,
-  currentQuery
+  currentQuery,
+  user
 }) => {
-  const [querySize, setQuerySize] = useState(0);
-  const firestore = useFirebase().firestore();
-  firestore
-    .collection("records")
-    .where("user", "==", auth.uid)
-    .get()
-    .then(function(querySnapshot) {
-      setQuerySize(querySnapshot.size);
-    });
+  const [sortKey, setSortKey] = useState("createdAt");
+  const [currentSortType, setSortType] = useState("desc");
+  let itemsCount = 0;
+  const project = useContext(ProjectContext);
+  switch (type) {
+    case "record":
+      itemsCount = user && user[0].recordsCount;
+
+      break;
+    case "project":
+      itemsCount = project && project.itemsCount;
+      break;
+    case "projects":
+      itemsCount = user && user[0].projectsCount;
+      break;
+    default:
+      break;
+  }
+
+  const sortFunc = (a, b) => {
+    console.log("sortFunc wywołana z", currentSortType, sortKey, recordsArray);
+    if (currentSortType === "asc") {
+      if (a[sortKey] < b[sortKey]) return -1;
+      else if (a[sortKey] > b[sortKey]) return 1;
+      return 0;
+    } else if (currentSortType === "desc") {
+      if (a[sortKey] < b[sortKey]) return 1;
+      else if (a[sortKey] > b[sortKey]) return -1;
+      return 0;
+    }
+  };
 
   return (
     <StyledWrapper>
@@ -100,14 +122,18 @@ const RecordList = ({
         {headers.map(header => {
           const orderObject = {
             orderBy: header[1],
-            sortType: currentQuery.sortType === "asc" ? "desc" : "asc"
+            sortType: currentSortType === "asc" ? "desc" : "asc"
           };
-          const active = currentQuery.orderBy === header[1] ? true : false;
+          const active = sortKey === header[1] ? true : false;
           return (
             <StyledListHeaderElement
               key={header[0]}
               active={active}
-              onClick={() => orderData(orderObject)}
+              onClick={() => {
+                setSortKey(orderObject.orderBy);
+                setSortType(orderObject.sortType);
+                console.log(currentSortType, sortKey);
+              }}
             >
               {header[0]}
               <FaSort />
@@ -119,7 +145,7 @@ const RecordList = ({
         {recordsArray ? (
           recordsArray.length > 0 ? (
             <>
-              {recordsArray.map(record => (
+              {[...recordsArray].sort(sortFunc).map(record => (
                 <ListElement
                   data={record}
                   key={record.id}
@@ -128,8 +154,8 @@ const RecordList = ({
                 />
               ))}
               <StyledListFooter>
-                1 - {recordsArray.length} of {querySize}
-                {recordsArray.length < querySize && (
+                {recordsArray.length} of {itemsCount}
+                {recordsArray.length < itemsCount && (
                   <div onClick={loadMore}>
                     load more <FaAngleDoubleRight />
                   </div>
@@ -157,7 +183,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     currentQuery: state.query[ownProps.view],
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    user: state.firestore.ordered.users
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(RecordList);
